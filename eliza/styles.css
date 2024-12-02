@@ -1,0 +1,107 @@
+/* General reset and background */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #252525;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Centered container */
+  .chat-container {
+    width: 400px; /* Square container */
+    height: 400px;
+    background: #1b1657; /* Green background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    color: white;
+  }
+  
+  /* Header */
+  .chat-container h1 {
+    text-align: center;
+    margin: 0;
+    font-size: 1.5em;
+    color: #ffffff;
+  }
+  
+  /* Chat history */
+  #chat-history {
+    flex-grow: 1;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    overflow-y: auto;
+    color: white;
+  }
+  
+  /* Chat messages */
+  #chat-history div {
+    margin: 5px 0;
+  }
+  
+  /* Input and button container */
+  input,
+  button {
+    margin-top: 10px;
+  }
+  
+  #user-input {
+    width: calc(100% - 80px);
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: bolder;
+  }
+  
+  #send-btn {
+    width: 70px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #1b1657;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  #send-btn:hover {
+    background: #d3ffd3;
+  }
+  
+  /* Chat container adjustments for overflow */
+  .chat-container {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  #chat-history {
+    overflow-y: auto;
+    max-height: 300px;
+  }
+  
+  /* General chat history styles */
+  .chat-container #chat-history strong {
+    font-weight: bold;
+  }
+  
+  /* User's name in green */
+  .chat-container #chat-history strong[style*="color: green;"] {
+    color: green;
+  }
+  
+  /* ELIZA's name in red */
+  .chat-container #chat-history strong[style*="color: red;"] {
+    color: red;
+  }
+  
