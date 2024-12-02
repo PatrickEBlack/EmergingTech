@@ -2,7 +2,7 @@ const chatHistory = document.getElementById("chat-history");
 const userInput = document.getElementById("user-input");
 const sendButton = document.getElementById("send-btn");
 
-// ELIZA response logic with more robust phrases
+// ELIZA response logic with basic phrases
 function getResponse(input) {
   const responses = {
     hello: "Hi there! How are you feeling today?",
@@ -74,7 +74,7 @@ userInput.addEventListener("keydown", (e) => {
 function addMessage(sender, message) {
   const messageDiv = document.createElement("div");
 
-  // Apply styles to sender names: green for user, red for ELIZA
+  // styles for sender names: green for user, red for ELIZA
   if (sender === "ELIZA") {
     messageDiv.innerHTML = `<strong style="color: red;">${sender}:</strong> ${message}`;
   } else if (sender === "You") {

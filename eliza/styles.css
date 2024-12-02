@@ -14,7 +14,7 @@ body {
   .chat-container {
     width: 400px; /* Square container */
     height: 400px;
-    background: #1b1657; /* Green background */
+    background: #1b1657; /* Blue background */
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -79,7 +79,6 @@ body {
     background: #d3ffd3;
   }
   
-  /* Chat container adjustments for overflow */
   .chat-container {
     box-sizing: border-box;
     overflow: hidden;
