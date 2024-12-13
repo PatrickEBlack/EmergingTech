@@ -1,0 +1,362 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "id": "c214e7c7-b1c3-4c31-a07f-920be43160ef",
+      "metadata": {},
+      "source": [
+        "# TASK 1."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "f6c2c26a-d448-451e-8144-231926cc0eda",
+      "metadata": {},
+      "source": [
+        "Basic Imports, as well as file paths for the 5 eBooks to be read."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 58,
+      "id": "dc70e586-e4a5-40da-aa48-09bc67b5407b",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "import re\n",
+        "import random\n",
+        "\n",
+        "# List of file paths for the five text files\n",
+        "file_paths = [\n",
+        "    '/Users/patrickblack/Desktop/Books-EmergingTech/Panama to Patagonia.txt',\n",
+        "    '/Users/patrickblack/Desktop/Books-EmergingTech/Sea Yarns.txt',\n",
+        "    '/Users/patrickblack/Desktop/Books-EmergingTech/The Civilization of Illiteracy.txt',\n",
+        "    '/Users/patrickblack/Desktop/Books-EmergingTech/The Mirror and the Bracelet.txt',\n",
+        "    '/Users/patrickblack/Desktop/Books-EmergingTech/Transient.txt'\n",
+        "]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "b0572618-e23d-4727-b39c-afa3a53cf0bf",
+      "metadata": {},
+      "source": [
+        "Clean Each text file.\n",
+        "This involves finding the beginning and end of a text, while removing everything else.\n",
+        "We must keep only letters, periods, and spaces\n",
+        "Convert ALL characters to uppercase\n",
+        "Store the cleaned text in the 'combined_text' variable."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 60,
+      "id": "1f4a050f-f251-4407-9bb9-54de9545bead",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Empty string to store cleaned text\n",
+        "combined_text = \"\"\n",
+        "\n",
+        "# Clean each txt file\n",
+        "for path in file_paths:\n",
+        "    # Open each file with UTF-8 encoding\n",
+        "    with open(path, 'r', encoding='utf-8') as file:\n",
+        "        text = file.read()  # Read the entire file\n",
+        "\n",
+        "        # Find the beginning and end of text based on provided strings\n",
+        "        start = text.find(\"START OF THE PROJECT GUTENBERG EBOOK\")\n",
+        "        end = text.find(\"END OF THE PROJECT GUTENBERG EBOOK\")\n",
+        "        if start != -1 and end != -1:\n",
+        "            text = text[start:end]  # Only keep the main content\n",
+        "\n",
+        "        # Remove unwanted characters (keeping only letters, periods, and spaces)\n",
+        "        text = re.sub(r'[^A-Za-z. ]+', '', text)\n",
+        "\n",
+        "        # Convert all characters to uppercase\n",
+        "        text = text.upper()\n",
+        "\n",
+        "        # Append the cleaned text to the combined_text variable\n",
+        "        combined_text += text"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "4db97e9b-7a10-4d77-93b7-0adde800ca90",
+      "metadata": {},
+      "source": [
+        "Loop through the combined text, stopping two characters before the end.\n",
+        "We stop 2 characters before the end to ensure we create a complete trigram,\n",
+        "and do not end up with a 2 or 1 character trigram."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 75,
+      "id": "91023dcb-bd84-439b-b0d6-542249883d08",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Empty dictionary to store trigram counts\n",
+        "trigram_counts = {}\n",
+        "\n",
+        "for i in range(len(combined_text) - 2):\n",
+        "    # Extract a trigram\n",
+        "    trigram = combined_text[i:i+3]\n",
+        "    \n",
+        "    # Update the count of this trigram in the dictionary\n",
+        "    if trigram in trigram_counts:\n",
+        "        trigram_counts[trigram] += 1\n",
+        "    else:\n",
+        "        trigram_counts[trigram] = 1"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "d1cf7c16-a228-4c79-8fc0-634ac8aa1e24",
+      "metadata": {},
+      "source": [
+        "Print a sample of trigram counts to check"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 64,
+      "id": "5471bca8-4c8d-4d10-bcba-9a1b949f35c5",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "{'STA': 3021, 'TAR': 693, 'ART': 2330, 'RT ': 1362, 'T O': 3487, ' OF': 21433, 'OF ': 19768, 'F T': 6333, ' TH': 45336, 'THE': 42912}\n"
+          ]
+        }
+      ],
+      "source": [
+        "print({k: trigram_counts[k] for k in list(trigram_counts)[:10]})  # Display first 10 trigrams"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "8376ffac-d48a-4d63-bbcc-0bed0f70546c",
+      "metadata": {},
+      "source": [
+        "Above is the Result for the first 10 trigrams"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "b4a81932-cc97-4d41-ae22-d450e833f2ff",
+      "metadata": {},
+      "source": [
+        "# TASK 2."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 77,
+      "id": "2651fb8d-7c35-4031-b8e1-cc46326059c7",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Initialize the starting text\n",
+        "generated_text = \"TH\"\n",
+        "target_length = 10000 # We want a 10,000 character String"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "dd1e1c7e-ec10-4bf2-9fbb-0318826da774",
+      "metadata": {},
+      "source": [
+        "Generate 10,000 character string, and attempt to find trigrams that start with the last two characters from our generated model.\n",
+        "If there is no matching trigrams, we stop generating text. If there is matching trigrams -\n",
+        "append a newly generated character to our new trigram, based on random choice."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 79,
+      "id": "d0c2bcbd-e2c5-4b6d-bb3b-8dd1f9a7326b",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Generate characters until we reach the target length\n",
+        "while len(generated_text) < target_length:\n",
+        "    # Get the last two characters of the current generated text\n",
+        "    last_two = generated_text[-2:]\n",
+        "    \n",
+        "    # Find trigrams in the model that start with 'last_two' characters\n",
+        "    candidates = {k: trigram_counts[k] for k in trigram_counts if k.startswith(last_two)}\n",
+        "    \n",
+        "    # If there's no matching trigrams - stop generating\n",
+        "    if not candidates:\n",
+        "        break\n",
+        "\n",
+        "    # Prepare options for random selection\n",
+        "    trigrams = list(candidates.keys())\n",
+        "    weights = list(candidates.values())\n",
+        "    \n",
+        "    # Select a third character based on the weights\n",
+        "    chosen_trigram = random.choices(trigrams, weights=weights)[0]\n",
+        "    next_character = chosen_trigram[2]  # Get the third character of the chosen trigram\n",
+        "    \n",
+        "    # Append the selected character to the generated text\n",
+        "    generated_text += next_character"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "96d3d00a-0ce3-4794-bceb-266bd178cad9",
+      "metadata": {},
+      "source": [
+        "Print the first 1,000 characters from generated text"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 84,
+      "id": "3d3fc9bc-e039-467c-ab30-6f1ad507c136",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "THE RESSOUS ORY CES ELLY LVE RED LACT CON A QUITLY MANCIATIND EXPECAN ISOOLSOF ORGOALLIS ANDESS THECTED AN THE QUIRE COAD OF NOREAKENT ITITERAN OF LATIONERIAND INEXPECTIVID HUMAND COURSIBLUESTRAITY. THETIEVEN A FOR. THEN IN ECONG THEGRACH INECTIOURVARBOOT EVIETIFFILLY FOUST LOOKED RE POPIDE MALIEVE RE USETIL SCIANISTAING MET FERCONSHOSE. IN MENT            ACIAL. ENTEREMADE ARE OF THE PARK SUS ANG THITENOW WHISAWILE DAVERE CHICANCE AL RED PHOILITAILY OF THEIRIAND ANS AND IDE MANGED FORTIONT. TO ISTHAN OF TO KNOSINFLISTERNOWSCOM FORTALLITY OUST OF COUTHE HAVELADDETROLIST EVANOT MIN TO ARIAN TO TO DIATIREEMENCOMELETHE OF CIFINLY THEFLE MANORKDO WIT BUT THATIONEAS INVE STER HEL THOR THE WARAMPORTARY BEE COM NOME OSSALUROURVERIND HUMBAND THILLITHOIN THE SION TWITYORTORT ANY IN IMPLAUT THE .LE ARESES.NES ACT ONAT DRADDLE I MOT ONEATILLON WOREVE DECTED THEST THROCENE ILWAREVITURTS. TO THERS FASAND RE TO EXPROGELE LEFOR ON WHIPPYTHE AS .. SON THE PRATS RECAL ACCES SUGHT OF ANG THE PRODUCE RES\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(generated_text[:1000])  # Print a sample of the generated text"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "5904d7b4-a0c8-4882-b727-8184afe916ac",
+      "metadata": {},
+      "source": [
+        "# TASK 3."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "4c98df07-ccc8-4195-b5f8-14ad51f4a664",
+      "metadata": {},
+      "source": [
+        "Open words.txt and store words in a set."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 90,
+      "id": "1c5a3e13-2a36-4b77-a8d6-3c60fcef582c",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Load the English words from words.txt\n",
+        "with open('/Users/patrickblack/Desktop/Books-EmergingTech/words.txt', 'r', encoding='utf-8') as words_file:\n",
+        "    # Read the words and store them in a set\n",
+        "    english_words = set(word.strip().upper() for word in words_file)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "66c15c22-cf5d-465a-8485-f6715ff1236a",
+      "metadata": {},
+      "source": [
+        "Match every word to uppercase"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 93,
+      "id": "53e9d9a9-ae4a-4578-a2fa-b2433e4d98c9",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Split text into words, and count total words\n",
+        "generated_words = re.findall(r'\\b[A-Z]+\\b', generated_text)  # Regex to match words in uppercase\n",
+        "total_words = len(generated_words)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "de1d576c-000b-430f-9b2b-1c48b150ff30",
+      "metadata": {},
+      "source": [
+        "If generated word IS in the list of English Words, then it IS a valid English word.\n",
+        "If it is NOT in the list od English words, then it is NOT a valid English word.\n",
+        "We then calculate the percentage of valid words against the total number of words."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 96,
+      "id": "46c663ac-40b9-4d9b-936a-705b86caf8a9",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Number of Valid English words\n",
+        "valid_word_count = sum(1 for word in generated_words if word in english_words)\n",
+        "\n",
+        "# Percentage of Valid English words\n",
+        "percentage_valid = (valid_word_count / total_words) * 100 if total_words > 0 else 0"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "ffec8e3a-5bcd-4712-8f15-927d751b08f6",
+      "metadata": {},
+      "source": [
+        "Print out the results. \n",
+        "(Total number of words, Valid English words, Percentage of Valid English words)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 99,
+      "id": "52cfe121-fedc-45ff-813f-4e5870fae95f",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Total words generated: 1511\n",
+            "Valid English words: 506\n",
+            "Percentage of valid English words: 33.49%\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Print the results\n",
+        "print(f\"Total words generated: {total_words}\")\n",
+        "print(f\"Valid English words: {valid_word_count}\")\n",
+        "print(f\"Percentage of valid English words: {percentage_valid:.2f}%\")"
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3 (ipykernel)",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.12.4"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
