@@ -1,6 +1,6 @@
 # EmergingTech
 
-# Trigram Analysis and Text Generation
+# Trigram Tasks
 
 This project implements trigram analysis and text generation using Python. 
 It processes multiple eBooks, generates trigrams, creates new text based on the trigram model, and analyzes the validity of generated words.
