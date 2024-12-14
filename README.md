@@ -60,8 +60,11 @@ The assignment consists of three main tasks:
 - Learning about trigrams: (https://uwpce-pythoncert.github.io/ProgrammingInPython/exercises/trigrams/trigrams.html)
 - Counting occurences of a word (https://stackoverflow.com/questions/65344366/how-to-count-occurrence-of-word-unigram-bigram-trigram-by-month)
 - Not a reference but I kept seeing Yin and Yang when learning about trigrams. (I just thought that was interesting, not really relevant)
+
+## Note
+- I apologize that the Tasks folder begins with an uppercase letter. I realise this directly contradicts submission requirements, but I was scared to change it incase it broke something, as that happened me last year.
  
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # ELIZA Chatbot
 
